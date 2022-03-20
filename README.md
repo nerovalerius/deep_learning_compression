@@ -20,6 +20,10 @@ For Development purposes, one should also install the project locally with:
 $ python -m pip install -e .
 ```
 
+The following dependencies are required to use Compression.py:
+- nconvert - download, build and install from https://www.xnview.com/en/xnconvert/#downloads
+- openjpeg - download an build and install from https://github.com/uclouvain/openjpeg/blob/master/INSTALL.md
+
 
 ## Datasets
 
