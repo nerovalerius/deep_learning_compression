@@ -1,7 +1,7 @@
 # Dependencies:
 # JPEG:  nconvert - download, build and install from https://www.xnview.com/en/xnconvert/#downloads
 # JPEGXR: nconvert - download, build and install from https://www.xnview.com/en/xnconvert/#downloads
-# JPEG2000: openjpeg - download an build and install from https://github.com/uclouvain/openjpeg/blob/master/INSTALL.md
+# JPEG2000: openjpeg - download, build and install from https://github.com/uclouvain/openjpeg/blob/master/INSTALL.md
 
 import os
 import subprocess
