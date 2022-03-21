@@ -10,7 +10,7 @@ import subprocess
 def jpeg(input_file, output_file, target_ratio):
     """Compress input file with the jpeg codec to required compression ratio"""
     # search the right q (Quality factor for jpeg)
-    # for the target_ratio by using bisection
+    # to achieve atleast the target_ratio by using bisection
     q_l = 1
     q_r = 100
     q_m = 50
@@ -23,23 +23,13 @@ def jpeg(input_file, output_file, target_ratio):
             q_l = q_m
         q_m_last = q_m
         q_m = q_l + (q_r - q_l) // 2
-    # If the q_m + 1 yields a ratio which is nearer to the
-    # target_ratio than the found q_m, use that one instead.
-    # The bisect just finds a q_m, which yields a ratio >= target_ratio.
-    # So q_m + 1 must be checked.
-    if q_m > 1:
-        ratio_1 = _nconvert_run(input_file, output_file, q_m + 1, "jpeg")
-        if abs(target_ratio - ratio) < abs(target_ratio - ratio_1):
-            ratio = _nconvert_run(input_file, output_file, q_m, "jpeg")
-        else:
-            ratio = ratio_1
     return ratio
 
 
 def jpegXR(input_file, output_file, target_ratio):
     """Compress input file with the jpegXR codec to required compression ratio"""
     # search the right q (Quality factor for jpegXR)
-    # for the target_ratio by using bisection
+    # to achieve atleast the target_ratio by using bisection
     q_l = 1
     q_r = 100
     q_m = 50
@@ -52,16 +42,6 @@ def jpegXR(input_file, output_file, target_ratio):
             q_l = q_m
         q_m_last = q_m
         q_m = q_l + (q_r - q_l) // 2
-    # If the q_m + 1 yields a ratio which is nearer to the
-    # target_ratio than the found q_m, use that one instead.
-    # The bisect just finds a q_m, which yields a ratio >= target_ratio.
-    # So q_m + 1 must be checked.
-    if q_m > 1:
-        ratio_1 = _nconvert_run(input_file, output_file, q_m + 1, "jxr")
-        if abs(target_ratio - ratio) < abs(target_ratio - ratio_1):
-            ratio = _nconvert_run(input_file, output_file, q_m, "jxr")
-        else:
-            ratio = ratio_1
     return ratio
 
 
