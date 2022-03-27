@@ -13,6 +13,8 @@ One should consider the usage of an virtual environment. Please see [Creating vi
 
 ```bash
 $ python -m pip install -r requirements.txt
+
+$ git submodules init && git submodule update
 ```
 
 For Development purposes, one should also install the project locally with:
