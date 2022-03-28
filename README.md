@@ -25,34 +25,54 @@ We use full- and no-reference image quality metrics to assess the quality of the
 
 ### Full-Reference Metrics
 
-MSE - Mean Squared Error  
-PSNR - Peak Signal-To-Noise Ratio  
-MSSIM - Multi-scale Structural Similarity
+Mean Squared Error (MSE)
+Root Mean Sqaured Error (RMSE)
+Peak Signal-to-Noise Ratio (PSNR)
+Structural Similarity Index (SSIM)
+Universal Quality Image Index (UQI)
+Multi-scale Structural Similarity Index (MS-SSIM)
+Erreur Relative Globale Adimensionnelle de Synthèse (ERGAS)
+Spatial Correlation Coefficient (SCC)
+Relative Average Spectral Error (RASE)
+Spectral Angle Mapper (SAM)
+Spectral Distortion Index (D_lambda)
+Spatial Distortion Index (D_S)
+Quality with No Reference (QNR)
+Visual Information Fidelity (VIF)
+Block Sensitive - Peak Signal-to-Noise Ratio (PSNR-B)
 
-Use `./image_metrics/calculate_metrics.py` for evaluation.
+### No-Reference Metrics
+
+Blind/Referenceless Image Spatial Quality Evaluator (BRISQUE)
+Natural Image Quality Evaluator (NIQE)
+Perception-based Image Quality Evaluator (PIQE)
+
+For those metrics, we use the [NRVQA](https://github.com/buyizhiyou/NRVQA]) repo.
+
+
+Use `./image_metrics/calculate_metrics.py` to calculate metrics.
 The program can handle a pair of images consisting of an uncompressed vs an compressed image.
 ```bash
 $ python calculate_metrics.py birb.jpg  birb_compressed.jpg
 using two images for comparison
-Reference image vs compressed image: mse: 1.46 | psnr: 46.49 | mssim: 0.98
 ```
 Furthermore, two folders, consisting of either compressed and uncompressed images can be compared and their results averaged.
 ```bash
 $ python calculate_metrics.py reference_images/ compressed_images/
 using two directories with images for comparison
-processed 1 file pair/s
-References image vs compressed images: avg_mse: 1.46 | avg_psnr: 46.49 | avg_mssim: 0.98
 ```
 
+The output is a CSV file:
+```bash
+csv.out
+```
 
+With the following formatting:
 
-### No-Reference Metrics
+|image_name|rmse|psnr|rmse_sw|uqi|ssim|ergas|scc|rase|sam|msssim|vifp|psnrb|niqe|brisque|
+|-----|----|----|-------|---|----|-----|---|----|---|------|----|-----|----|-------|
+|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|
 
-BRISQUE - Blind/Referenceless Image Spatial Quality Evaluator  
-NIQE - Natural Image Quality Evaluator  
-PIQE - Perception-based Image Quality Evaluator  
-
-For those metrics, we use the [NRVQA](https://github.com/buyizhiyou/NRVQA]) repo.
 
 ## Datasets
 

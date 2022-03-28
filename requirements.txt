@@ -1,4 +1,10 @@
 requests==2.27.1
 scikit-image>=0.19.2
-numpy >= 1.11.1
 matplotlib >= 1.5.1
+pandas
+sewar
+joblib==0.14.0
+numpy
+scikit-learn
+scipy
+tqdm==4.38.0
