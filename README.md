@@ -60,8 +60,16 @@ s.GetAllFileInformationOfASingleDataSet(setName="ImageCompressionBenchmark8BitRG
 
 ```
 
+## Compression
+
+To run the compression over all methods, you can run following script.
+(Currently, the values are hard coded, but this can easily be extended to make variable options!)
 
 
+```bash
+$ python ./Scripts/RunCompression.py
+
+```
 
 
 
