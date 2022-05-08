@@ -3,65 +3,101 @@
 # JPEGXR: nconvert - download, build and install from https://www.xnview.com/en/xnconvert/#downloads
 # JPEG2000: openjpeg - download, build and install from https://github.com/uclouvain/openjpeg/blob/master/INSTALL.md
 
+from abc import  abstractmethod
 import os
 import subprocess
 
 
-def jpeg(input_file, output_file, target_ratio):
-    """Compress input file with the jpeg codec to required compression ratio"""
-    # search the right q (Quality factor for jpeg)
-    # to achieve atleast the target_ratio by using bisection
-    q_l = 1
-    q_r = 100
-    q_m = 50
-    q_m_last = 0
-    while q_m != q_m_last:
-        ratio = _nconvert_run(input_file, output_file, q_m, "jpeg")
-        if ratio <= target_ratio:
-            q_r = q_m
-        else:
-            q_l = q_m
-        q_m_last = q_m
-        q_m = q_l + (q_r - q_l) // 2
-    return ratio
+class ConvCompressor:
+
+    METHOD_NAME=""
+
+    @staticmethod
+    @abstractmethod
+    def compress(input_file, output_file, target_ratio):
+        raise NotImplementedError()
+
+    @staticmethod
+    @abstractmethod
+    def decompress(input_file, output_file):
+        raise NotImplementedError()
+
+class JpegCompressor:
+
+    METHOD_NAME="JPEG"
+
+    @staticmethod
+    def compress(input_file, output_file, target_ratio):
+        """Compress input file with the jpeg codec to required compression ratio"""
+        # search the right q (Quality factor for jpeg)
+        # to achieve atleast the target_ratio by using bisection
+        q_l = 1
+        q_r = 100
+        q_m = 50
+        q_m_last = 0
+        while q_m != q_m_last:
+            ratio = _nconvert_run(input_file, output_file, q_m, "jpeg")
+            if ratio <= target_ratio:
+                q_r = q_m
+            else:
+                q_l = q_m
+            q_m_last = q_m
+            q_m = q_l + (q_r - q_l) // 2
+        return ratio
+
+class JpegXrCommpressor:
+
+    METHOD_NAME="JpegXR"
+
+    @staticmethod
+    def compress(input_file, output_file, target_ratio):
+        """Compress input file with the jpegXR codec to required compression ratio"""
+        # search the right q (Quality factor for jpegXR)
+        # to achieve atleast the target_ratio by using bisection
+        q_l = 1
+        q_r = 100
+        q_m = 50
+        q_m_last = 0
+        while q_m != q_m_last:
+            ratio = _nconvert_run(input_file, output_file, q_m, "jxr")
+            if ratio <= target_ratio:
+                q_r = q_m
+            else:
+                q_l = q_m
+            q_m_last = q_m
+            q_m = q_l + (q_r - q_l) // 2
+        return ratio
 
 
-def jpegXR(input_file, output_file, target_ratio):
-    """Compress input file with the jpegXR codec to required compression ratio"""
-    # search the right q (Quality factor for jpegXR)
-    # to achieve atleast the target_ratio by using bisection
-    q_l = 1
-    q_r = 100
-    q_m = 50
-    q_m_last = 0
-    while q_m != q_m_last:
-        ratio = _nconvert_run(input_file, output_file, q_m, "jxr")
-        if ratio <= target_ratio:
-            q_r = q_m
-        else:
-            q_l = q_m
-        q_m_last = q_m
-        q_m = q_l + (q_r - q_l) // 2
-    return ratio
+class Jpeg2kCommpressor:
 
+    METHOD_NAME="JpegXR"
 
-def jpeg2K(input_file, output_file, target_ratio):
-    """Compress input file with the jpeg2000 codec to required compression ratio"""
-    args = "opj_compress -i -o -OutFor J2K -r".split(" ")
-    args.append(str(target_ratio))
-    args.insert(2, input_file)
-    args.insert(4, output_file)
-    result = subprocess.run(args, capture_output=True, text=True)
-    if result.returncode != 0:
-        raise Exception("nconvert Exception: " + result.stderr)
-    size_in = os.path.getsize(input_file)
-    size_out = os.path.getsize(output_file)
-    ratio = size_in / size_out
-    return ratio
+    @staticmethod
+    def compress(input_file, output_file, target_ratio):
+
+        """Compress input file with the jpeg2000 codec to required compression ratio"""
+        args = "opj_compress -i -o -OutFor J2K -r".split(" ")
+        args.append(str(target_ratio))
+        args.insert(2, input_file)
+        args.insert(4, output_file)
+        result = subprocess.run(args, capture_output=True, text=True)
+        if result.returncode != 0:
+            raise Exception("nconvert Exception: " + result.stderr)
+        size_in = os.path.getsize(input_file)
+        size_out = os.path.getsize(output_file)
+        ratio = size_in / size_out
+        return ratio
+
+    @staticmethod
+    def decompress(input_file, output_file):
+        raise NotImplementedError()
+
+        # TODO: Implement me!
 
 
 def _nconvert_run(input_file, output_file, q, alg):
-    args = "nconvert -o -overwrite -out -q".split(" ")
+    args = "./nconvert -o -overwrite -out -q".split(" ")
     args.append(input_file)
     args.insert(2, output_file)
     args.insert(-2, alg)

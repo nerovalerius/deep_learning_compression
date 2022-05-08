@@ -22,3 +22,4 @@ typing-extensions==4.1.1
 urllib3==1.26.9
 pillow==9.0.1
 tensorflow-compression==2.8.1
+dataclasses-json==0.5.7

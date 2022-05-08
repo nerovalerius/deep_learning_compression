@@ -20,6 +20,7 @@ class DataSetInfo:
 class ImageInfo:
 
     Filepath: Path
+    FileSizeBytes: int
 
 
 class Storage:
@@ -74,4 +75,13 @@ class Storage:
         else:
             foundSet = foundSets[0]()  # make instance
 
-        return [ImageInfo(Filepath=a) for a in foundSet.get_all_filepaths()]
+        return [
+            self.GetSingleFileInformation(filePath=Path(a))
+            for a in foundSet.get_all_filepaths()
+        ]
+
+    def GetSingleFileInformation(self, filePath: Path) -> ImageInfo:
+
+        fSize = filePath.stat().st_size  # filesize in bytes
+
+        return ImageInfo(Filepath=filePath.absolute(), FileSizeBytes=fSize)

@@ -2,6 +2,7 @@ from tensorflow_compression_local.models.tfci import *
 import tensorflow as tf
 import sys
 from PIL import Image
+from pathlib import Path
 
 # Attention: This is very dirty! I am writing a 'wrapper' around the cmd tool, that
 # enables us to run already trained models. The tensforflow impolementation can not
@@ -25,6 +26,15 @@ class DeepLearningCompressor:
 
     def compress(self, input_file_path, output_file_path):
         """Compress the image to a *.tfci file"""
+
+
+        if isinstance(input_file_path, Path):
+            input_file_path = input_file_path.as_posix()
+
+        if isinstance(output_file_path, Path):
+            output_file_path = output_file_path.as_posix()
+
+
         args = parse_args(
             ["", "compress", self.modelName, input_file_path, output_file_path]
         )
@@ -45,6 +55,12 @@ class DeepLearningCompressor:
         The model that was used is inferred from the file.
         """
 
+        if isinstance(input_file_path, Path):
+            input_file_path = input_file_path.as_posix()
+
+        if isinstance(output_file_path, Path):
+            output_file_path = output_file_path.as_posix()
+
         args = parse_args([" ", "decompress", input_file_path, output_file_path])
         decompress(args.input_file, args.output_file)
 
@@ -56,7 +72,7 @@ if __name__ == "__main__":
 
     inp = "/home/pfeiffer/repos/Media-Data-Formats-PS/deep_learning_compression/tmp/big_building.ppm"
     out = "/home/pfeiffer/repos/Media-Data-Formats-PS/deep_learning_compression/tmp/big_building_compressed.tfci"
-    outc = "/home/pfeiffer/repos/Media-Data-Formats-PS/deep_learning_compression/tmp/big_building_compressed.ppm"
+    outc = "/home/pfeiffer/repos/Media-Data-Formats-PS/deep_learning_compression/tmp/big_building_compressed.png"
 
     c = DeepLearningCompressor(model)
 
