@@ -1,8 +1,10 @@
-from tensorflow_compression_local.models.tfci import *
-import tensorflow as tf
 import sys
-from PIL import Image
 from pathlib import Path
+
+import tensorflow as tf
+from PIL import Image
+from tensorflow_compression_local.models.tfci import *
+
 
 # Attention: This is very dirty! I am writing a 'wrapper' around the cmd tool, that
 # enables us to run already trained models. The tensforflow impolementation can not
@@ -27,13 +29,11 @@ class DeepLearningCompressor:
     def compress(self, input_file_path, output_file_path):
         """Compress the image to a *.tfci file"""
 
-
         if isinstance(input_file_path, Path):
             input_file_path = input_file_path.as_posix()
 
         if isinstance(output_file_path, Path):
             output_file_path = output_file_path.as_posix()
-
 
         args = parse_args(
             ["", "compress", self.modelName, input_file_path, output_file_path]
