@@ -13,6 +13,7 @@ from PIL import Image
 class ConvCompressor:
 
     METHOD_NAME = ""
+    FILE_SUFFIX = ""
 
     @staticmethod
     @abstractmethod
@@ -28,9 +29,10 @@ class ConvCompressor:
 class JpegCompressor:
 
     METHOD_NAME = "JPEG"
+    FILE_SUFFIX = "jpeg"
 
     @staticmethod
-    def compress(self, input_file, output_file, target_ratio):
+    def compress(input_file, output_file, target_ratio):
         """Compress input file with the jpeg codec to required compression ratio"""
         # search the right q (Quality factor for jpeg)
         # to achieve atleast the target_ratio by using bisection
@@ -39,7 +41,7 @@ class JpegCompressor:
         q_m = 50
         q_m_last = 0
         while q_m != q_m_last:
-            ratio = _nconvert_comp(input_file, output_file, q_m, "jpeg")
+            ratio = _nconvert_comp(input_file, output_file, q_m, JpegCompressor.FILE_SUFFIX)
             if ratio <= target_ratio:
                 q_r = q_m
             else:
@@ -58,6 +60,7 @@ class JpegCompressor:
 class JpegXrCommpressor:
 
     METHOD_NAME = "JPEGXR"
+    FILE_SUFFIX = "jxr"
 
     @staticmethod
     def compress(input_file, output_file, target_ratio):
@@ -69,7 +72,7 @@ class JpegXrCommpressor:
         q_m = 50
         q_m_last = 0
         while q_m != q_m_last:
-            ratio = _nconvert_comp(input_file, output_file, q_m, "jxr")
+            ratio = _nconvert_comp(input_file, output_file, q_m, JpegXrCommpressor.FILE_SUFFIX)
             if ratio <= target_ratio:
                 q_r = q_m
             else:
@@ -88,6 +91,7 @@ class JpegXrCommpressor:
 class Jpeg2kCommpressor:
 
     METHOD_NAME = "JPEG2K"
+    FILE_SUFFIX = "j2k"
 
     @staticmethod
     def compress(input_file, output_file, target_ratio):
@@ -117,7 +121,7 @@ class Jpeg2kCommpressor:
 
 
 def _nconvert_comp(input_file, output_file, q, alg):
-    args = "nconvert -o -overwrite -out -q".split(" ")
+    args = "./nconvert -o -overwrite -out -q".split(" ")
     args.append(input_file)
     args.insert(2, output_file)
     args.insert(-2, alg)
@@ -132,7 +136,7 @@ def _nconvert_comp(input_file, output_file, q, alg):
 
 
 def _nconvert_decomp(input_file, output_file):
-    args = "nconvert -o -overwrite -out".split(" ")
+    args = "./nconvert -o -overwrite -out".split(" ")
     args.append(input_file)
     args.insert(2, output_file)
     args.insert(-1, "ppm")

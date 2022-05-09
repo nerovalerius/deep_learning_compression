@@ -110,6 +110,13 @@ if __name__ == "__main__":
                     filePath=compFilePath,
                     DLmodelName=currDlName,
                     methodName=convMeth.METHOD_NAME,
+                    fileSuffix=convMeth.FILE_SUFFIX,
+                )
+                currDecompConvOout = cs.CreateAndPrepareDeCompressedPathConventional(
+                    dataSetName=dataSetName,
+                    filePath=compFilePath,
+                    DLmodelName=currDlName,
+                    methodName=convMeth.METHOD_NAME,
                 )
                 convMeth.compress(
                     input_file=orgFilePath.as_posix(),
@@ -117,15 +124,21 @@ if __name__ == "__main__":
                     target_ratio=currFile.FileSizeBytes / compInfo.FileSizeBytes,
                 )
                 # TODO: Decompress!
+                convMeth.decompress(
+                    input_file=currConvOout.as_posix(),
+                    output_file=currDecompConvOout.as_posix(),
+                )
                 currConvCompression = Compressed(
                     CompressedWithDl=False,
                     CompressMethod=convMeth.METHOD_NAME,
                     FilePathCompressed=currConvOout.as_posix(),
-                    FilePathDecompressed="",
+                    FilePathDecompressed=currDecompConvOout.as_posix(),
                     FileSizeCompressedBytes=s.GetSingleFileInformation(
                         currConvOout
                     ).FileSizeBytes,
-                    FileSizeDeCompressedBytes=-1,
+                    FileSizeDeCompressedBytes=s.GetSingleFileInformation(
+                        currDecompConvOout
+                    ).FileSizeBytes,
                     ConventionalCompressions=None,
                 )
 

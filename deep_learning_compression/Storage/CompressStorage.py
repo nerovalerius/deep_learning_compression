@@ -36,7 +36,7 @@ class CompressStorage(object):
         return currPath
 
     def CreateAndPrepareCompressedPathConventional(
-        self, dataSetName, DLmodelName, methodName, filePath: Path
+        self, dataSetName, DLmodelName, methodName, filePath: Path, fileSuffix: str
     ):
 
         currPath = self.path / dataSetName / DLmodelName / "compressed" / methodName
@@ -44,7 +44,7 @@ class CompressStorage(object):
         self.__ensure_exists(currPath)
 
         currPath = currPath / Path(filePath).stem
-        currPath = currPath.with_suffix(".compress")
+        currPath = currPath.with_suffix("." + fileSuffix)
 
         return currPath
 
