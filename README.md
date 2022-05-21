@@ -3,6 +3,21 @@
 Folder with additional information: [GoogleDrive](https://drive.google.com/drive/folders/169hvlZwRuLNFSC1VJuDmnXZuatHHbEax?usp=sharing)
 
 
+## Howto
+
+The main part of this project is the evaluation of the compression methods. The evaluation is located in a jupyter notebook in `./Notebooks/Evaluation.ipynb`. To generate the data needed for this you have to run some scripts in the following order:
+
+```bash
+
+$ python ./Scripts/PrepareData.py
+$ python ./Scripts/ResizeImagesInDataset.py
+$ python ./Scripts/RunCompression.py
+$ python ./Scripts/RunMetricEvaluation.py
+
+``` 
+
+The creates a file `./test.csv` that needs to be imported into the evaluation jupyter notebook.
+
 
 ## Installation
 
