@@ -57,7 +57,7 @@ if __name__ == "__main__":
     files = s.GetAllFileInformationOfASingleDataSet(setName=dataSetName)
 
     # Define models that should be used for compression
-    dl_model_names = ["b2018-gdn-128-1", "b2018-gdn-128-2"]
+    dl_model_names = ["b2018-gdn-128-1"]
     conv_methods: List[ConvCompressor] = [JpegXrCommpressor, JpegCompressor]
 
     all_processed = AllCompressImage(
