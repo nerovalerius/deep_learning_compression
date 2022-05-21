@@ -70,6 +70,55 @@ To run the compression over all methods, you can run following script.
 $ python ./Scripts/RunCompression.py
 
 ```
+## Image Quality Metrics
+We use full- and no-reference image quality metrics to assess the quality of the used compression techniques.
+
+### Full-Reference Metrics
+
+Mean Squared Error (MSE)
+Root Mean Sqaured Error (RMSE)
+Peak Signal-to-Noise Ratio (PSNR)
+Structural Similarity Index (SSIM)
+Universal Quality Image Index (UQI)
+Multi-scale Structural Similarity Index (MS-SSIM)
+Erreur Relative Globale Adimensionnelle de Synthèse (ERGAS)
+Spatial Correlation Coefficient (SCC)
+Relative Average Spectral Error (RASE)
+Spectral Angle Mapper (SAM)
+Spectral Distortion Index (D_lambda)
+Spatial Distortion Index (D_S)
+Quality with No Reference (QNR)
+Visual Information Fidelity (VIF)
+Block Sensitive - Peak Signal-to-Noise Ratio (PSNR-B)
+
+### No-Reference Metrics
+
+Blind/Referenceless Image Spatial Quality Evaluator (BRISQUE)
+Natural Image Quality Evaluator (NIQE)
+Perception-based Image Quality Evaluator (PIQE)
+
+For those metrics, we use the [NRVQA](https://github.com/buyizhiyou/NRVQA]) repo.
 
 
+Use `./image_metrics/calculate_metrics.py` to calculate metrics.
+The program can handle a pair of images consisting of an uncompressed vs an compressed image.
+```bash
+$ python calculate_metrics.py birb.jpg  birb_compressed.jpg
+using two images for comparison
+```
+Furthermore, two folders, consisting of either compressed and uncompressed images can be compared and their results averaged.
+```bash
+$ python calculate_metrics.py reference_images/ compressed_images/
+using two directories with images for comparison
+```
 
+The output is a CSV file:
+```bash
+csv.out
+```
+
+With the following formatting:
+
+|image_name|rmse|psnr|rmse_sw|uqi|ssim|ergas|scc|rase|sam|msssim|vifp|psnrb|niqe|brisque|
+|-----|----|----|-------|---|----|-----|---|----|---|------|----|-----|----|-------|
+|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|0.0|

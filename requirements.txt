@@ -23,3 +23,15 @@ urllib3==1.26.9
 pillow==9.0.1
 tensorflow-compression==2.8.1
 dataclasses-json==0.5.7
+scikit-image>=0.19.2
+pandas~=1.4.1
+sewar~=0.4.5
+joblib==0.14.0
+scikit-learn
+scipy~=1.8.0
+tqdm==4.38.0
+piq~=0.6.0
+torch~=1.10.0
+setuptools~=56.0.0
+opencv-python~=4.5.4.58
+torchvision~=0.11.1
