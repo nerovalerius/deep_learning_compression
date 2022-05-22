@@ -29,6 +29,13 @@ if __name__ == "__main__":
 
         red_size = tuple([s // reduction_factor for s in im.size])
 
-        im = im.resize(red_size, Image.BILINEAR)
+        im = im.crop(
+            box=(
+                0,
+                0,
+                int(im.width // reduction_factor),
+                int(im.height // reduction_factor),
+            )
+        )  # im.resize(red_size, Image.BILINEAR)
 
         im.save(f_obj.Filepath.as_posix())
