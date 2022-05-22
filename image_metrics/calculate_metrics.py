@@ -6,12 +6,13 @@ Credits of no-reference metrics: https://github.com/buyizhiyou/NRVQA
 import argparse
 import os
 import sys
-import pandas as pd
+
 import cv2
-import torch
-from piq import vsi, brisque
+import pandas as pd
 import sewar.full_ref as full_ref
+import torch
 from no_ref import niqe, piqe
+from piq import brisque, vsi
 
 # check cuda availability
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")

@@ -1,19 +1,17 @@
-from RunCompression import AllCompressImage
-
 import json
-
-import pandas as pd
-import cv2
-import torch
-from piq import vsi, brisque
-import sewar.full_ref as full_ref
-from image_metrics.no_ref import niqe, piqe
-
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
 
+import cv2
+import pandas as pd
+import sewar.full_ref as full_ref
+import torch
 from dataclasses_json import dataclass_json
+from piq import brisque, vsi
+from RunCompression import AllCompressImage
+
+from image_metrics.no_ref import niqe, piqe
 
 
 def calculate_metrics(reference_img, compressed_img, device):

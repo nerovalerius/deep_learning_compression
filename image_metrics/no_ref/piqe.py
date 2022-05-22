@@ -3,8 +3,8 @@ all credits to:
 https://github.com/buyizhiyou/NRVQA/blob/master/piqe.py
 """
 
-import numpy as np
 import cv2
+import numpy as np
 
 
 def calculate_mscn(dis_image):

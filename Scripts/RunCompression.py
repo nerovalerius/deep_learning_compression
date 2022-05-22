@@ -1,11 +1,24 @@
 import json
+import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import List, Optional
 
 from dataclasses_json import dataclass_json
+
+# TODO
+# This is just a workaround, because python in my WSL
+# adds the folder of the script to sys.path instead
+# of the workspace folder of vscode, which is cwd, when
+# you run or debug a script in vscode.
+# We should resolve this by using a venv.
+root = Path("./")
+sys.path.insert(0, str(root.resolve()))
+
+
 from deep_learning_compression.Compression.Compression import (
     ConvCompressor,
+    Jpeg2kCommpressor,
     JpegCompressor,
     JpegXrCommpressor,
 )
@@ -58,7 +71,11 @@ if __name__ == "__main__":
 
     # Define models that should be used for compression
     dl_model_names = ["b2018-gdn-128-1"]
-    conv_methods: List[ConvCompressor] = [JpegXrCommpressor, JpegCompressor]
+    conv_methods: List[ConvCompressor] = [
+        JpegXrCommpressor,
+        JpegCompressor,
+        Jpeg2kCommpressor,
+    ]
 
     all_processed = AllCompressImage(
         Images=[],
