@@ -62,11 +62,12 @@ class MetricResultRow:
     DeepLearningModel: str  # Name of Dl Model, to know what was referenced
     CompressionMethod: str  # Name of Compression (e.g. Dl Model, Jpeg, ...)
     ReferenceFilePath: str
-    DecompressedFilePath:str
+    DecompressedFilePath: str
     CompressedFilePath: str
-    FileSizeOriginal:int
-    FileSizeCompressed:int
+    FileSizeOriginal: int
+    FileSizeCompressed: int
     Metrics: dict
+
 
 @dataclass_json
 @dataclass
@@ -89,11 +90,10 @@ if __name__ == "__main__":
 
     all_results = MetricResults(Results=[])
 
-    for it,reference_image_obj in enumerate(data.Images):
+    for it, reference_image_obj in enumerate(data.Images):
         print(f"Processing {it}/{len(data.Images)} ...")
 
         reference_img = load_image(reference_image_obj.OriginalFilePath)
-
 
         for dl_method_obj in reference_image_obj.DeepLearningCompressions:
 
@@ -113,14 +113,12 @@ if __name__ == "__main__":
                 Metrics=m,
                 FileSizeOriginal=reference_image_obj.FileSizeByptes,
                 FileSizeCompressed=dl_method_obj.FileSizeCompressedBytes,
-                DecompressedFilePath=dl_method_obj.FilePathDecompressed
+                DecompressedFilePath=dl_method_obj.FilePathDecompressed,
             )
 
             all_results.Results.append(currDlRes)
 
             for conv_method_obj in dl_method_obj.ConventionalCompressions:
-                
-
 
                 currConvCompressed = load_image(conv_method_obj.FilePathDecompressed)
                 m = calculate_metrics(
@@ -137,12 +135,13 @@ if __name__ == "__main__":
                     Metrics=m,
                     FileSizeOriginal=reference_image_obj.FileSizeByptes,
                     FileSizeCompressed=conv_method_obj.FileSizeCompressedBytes,
-                    DecompressedFilePath=conv_method_obj.FilePathDecompressed
+                    DecompressedFilePath=conv_method_obj.FilePathDecompressed,
                 )
 
                 all_results.Results.append(currConvRes)
 
-
     r = all_results.to_dict()["Results"]
-    df = pd.DataFrame.from_dict({i:d for i,d in enumerate(r)}, orient="index")
-    pd.concat([df,df["Metrics"].apply(pd.Series)], axis=1).to_csv("./test.csv")
+    df = pd.DataFrame.from_dict({i: d for i, d in enumerate(r)}, orient="index")
+    pd.concat([df, df["Metrics"].apply(pd.Series)], axis=1).to_csv(
+        "./tmp/last_run_metrics.csv"
+    )

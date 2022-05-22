@@ -16,7 +16,7 @@ $ python ./Scripts/RunMetricEvaluation.py
 
 ``` 
 
-The creates a file `./test.csv` that needs to be imported into the evaluation jupyter notebook.
+The creates a file `./tmp/last_run_metrics.csv` that needs to be imported into the evaluation jupyter notebook.
 
 
 ## Installation

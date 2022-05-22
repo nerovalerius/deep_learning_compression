@@ -41,7 +41,9 @@ class JpegCompressor:
         q_m = 50
         q_m_last = 0
         while q_m != q_m_last:
-            ratio = _nconvert_comp(input_file, output_file, q_m, JpegCompressor.FILE_SUFFIX)
+            ratio = _nconvert_comp(
+                input_file, output_file, q_m, JpegCompressor.FILE_SUFFIX
+            )
             if ratio <= target_ratio:
                 q_r = q_m
             else:
@@ -72,7 +74,9 @@ class JpegXrCommpressor:
         q_m = 50
         q_m_last = 0
         while q_m != q_m_last:
-            ratio = _nconvert_comp(input_file, output_file, q_m, JpegXrCommpressor.FILE_SUFFIX)
+            ratio = _nconvert_comp(
+                input_file, output_file, q_m, JpegXrCommpressor.FILE_SUFFIX
+            )
             if ratio <= target_ratio:
                 q_r = q_m
             else:
@@ -121,7 +125,7 @@ class Jpeg2kCommpressor:
 
 
 def _nconvert_comp(input_file, output_file, q, alg):
-    args = "./nconvert -o -overwrite -out -q".split(" ")
+    args = "nconvert -o -overwrite -out -q".split(" ")
     args.append(input_file)
     args.insert(2, output_file)
     args.insert(-2, alg)
@@ -136,7 +140,7 @@ def _nconvert_comp(input_file, output_file, q, alg):
 
 
 def _nconvert_decomp(input_file, output_file):
-    args = "./nconvert -o -overwrite -out".split(" ")
+    args = "nconvert -o -overwrite -out".split(" ")
     args.append(input_file)
     args.insert(2, output_file)
     args.insert(-1, "ppm")
