@@ -22,7 +22,7 @@ from deep_learning_compression.Compression.Compression import (
     JpegCompressor,
     JpegXrCommpressor,
 )
-from deep_learning_compression.Compression.CompressionDl import DeepLearningCompressor
+from deep_learning_compression.Compression.CompressionDl import DeepLearningCompressor, DeepLearningCompressorRecurrentNN,DeepLearningCompressorTF
 from deep_learning_compression.Storage.CompressStorage import CompressStorage
 from deep_learning_compression.Storage.Storage import Storage
 
@@ -70,7 +70,13 @@ if __name__ == "__main__":
     files = s.GetAllFileInformationOfASingleDataSet(setName=dataSetName)
 
     # Define models that should be used for compression
-    dl_model_names = ["b2018-gdn-128-1"]
+    dl_methods = [DeepLearningCompressorTF(model_name="b2018-gdn-128-1"),
+                DeepLearningCompressorRecurrentNN(model_name="residual_gru-4", quality=4)]
+
+
+    dl_model_names = [meth.modelName for meth in dl_methods]
+
+
     conv_methods: List[ConvCompressor] = [
         JpegXrCommpressor,
         JpegCompressor,
@@ -92,8 +98,8 @@ if __name__ == "__main__":
             DeepLearningCompressions=[],
         )
 
-        for currDlName in dl_model_names:  # Iterate over Deep Learning Methods
-            model = DeepLearningCompressor(currDlName)  # Instantiate Model
+        for model in dl_methods:  # Iterate over Deep Learning Methods
+            currDlName = model.modelName
 
             compFilePath = cs.CreateAndPrepareCompressedPathDL(
                 dataSetName=dataSetName, modelName=currDlName, filePath=orgFilePath
