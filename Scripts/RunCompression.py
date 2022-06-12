@@ -70,8 +70,15 @@ if __name__ == "__main__":
     files = s.GetAllFileInformationOfASingleDataSet(setName=dataSetName)
 
     # Define models that should be used for compression
-    dl_methods = [DeepLearningCompressorTF(model_name="b2018-gdn-128-1"),
-                DeepLearningCompressorRecurrentNN(model_name="residual_gru-4", quality=4)]
+    dl_methods = [
+        DeepLearningCompressorTF(model_name="b2018-gdn-128-1"),
+        DeepLearningCompressorTF(model_name="b2018-gdn-128-3"),
+        DeepLearningCompressorTF(model_name="b2018-gdn-128-5"),
+        DeepLearningCompressorRecurrentNN(model_name="residual_gru-0", quality=0),
+        DeepLearningCompressorRecurrentNN(model_name="residual_gru-5", quality=5),
+        DeepLearningCompressorRecurrentNN(model_name="residual_gru-8", quality=8),
+        DeepLearningCompressorRecurrentNN(model_name="residual_gru-15", quality=15),
+    ]
 
 
     dl_model_names = [meth.modelName for meth in dl_methods]
