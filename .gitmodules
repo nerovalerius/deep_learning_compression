@@ -1,3 +1,6 @@
 [submodule "tensorflow_compression_local"]
 	path = tensorflow_compression_local
 	url = https://github.com/tensorflow/compression.git
+[submodule "tf-models"]
+	path = tf-models
+	url = git@github.com:PfeifferJosef-96/tf-models.git
