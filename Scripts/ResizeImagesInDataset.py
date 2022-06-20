@@ -33,8 +33,8 @@ if __name__ == "__main__":
             box=(
                 0,
                 0,
-                int(im.width // reduction_factor),
-                int(im.height // reduction_factor),
+                int(np.ceil(im.width/reduction_factor/32)*32),
+                int(np.ceil(im.height/reduction_factor/32)*32)
             )
         )  # im.resize(red_size, Image.BILINEAR)
 
