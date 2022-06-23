@@ -1,3 +1,4 @@
+import numpy as np
 import sys
 from pathlib import Path
 
@@ -33,8 +34,8 @@ if __name__ == "__main__":
             box=(
                 0,
                 0,
-                int(np.ceil(im.width/reduction_factor/32)*32),
-                int(np.ceil(im.height/reduction_factor/32)*32)
+                1024,  # int(np.ceil(im.width/reduction_factor/32)*32),
+                1024,  # int(np.ceil(im.height/reduction_factor/32)*32)
             )
         )  # im.resize(red_size, Image.BILINEAR)
 

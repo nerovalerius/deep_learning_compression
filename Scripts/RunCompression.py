@@ -22,7 +22,11 @@ from deep_learning_compression.Compression.Compression import (
     JpegCompressor,
     JpegXrCommpressor,
 )
-from deep_learning_compression.Compression.CompressionDl import DeepLearningCompressor, DeepLearningCompressorRecurrentNN,DeepLearningCompressorTF
+from deep_learning_compression.Compression.CompressionDl import (
+    DeepLearningCompressor,
+    DeepLearningCompressorRecurrentNN,
+    DeepLearningCompressorTF,
+)
 from deep_learning_compression.Storage.CompressStorage import CompressStorage
 from deep_learning_compression.Storage.Storage import Storage
 
@@ -71,18 +75,17 @@ if __name__ == "__main__":
 
     # Define models that should be used for compression
     dl_methods = [
-        DeepLearningCompressorTF(model_name="b2018-gdn-128-1"),
-        DeepLearningCompressorTF(model_name="b2018-gdn-128-3"),
-        DeepLearningCompressorTF(model_name="b2018-gdn-128-5"),
         DeepLearningCompressorRecurrentNN(model_name="residual_gru-0", quality=0),
         DeepLearningCompressorRecurrentNN(model_name="residual_gru-5", quality=5),
         DeepLearningCompressorRecurrentNN(model_name="residual_gru-8", quality=8),
+        DeepLearningCompressorRecurrentNN(model_name="residual_gru-10", quality=10),
         DeepLearningCompressorRecurrentNN(model_name="residual_gru-15", quality=15),
+        DeepLearningCompressorTF(model_name="b2018-gdn-128-1"),
+        DeepLearningCompressorTF(model_name="b2018-gdn-128-2"),
+        DeepLearningCompressorTF(model_name="b2018-gdn-128-4"),
     ]
 
-
     dl_model_names = [meth.modelName for meth in dl_methods]
-
 
     conv_methods: List[ConvCompressor] = [
         JpegXrCommpressor,

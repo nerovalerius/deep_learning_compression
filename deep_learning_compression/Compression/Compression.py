@@ -125,7 +125,7 @@ class Jpeg2kCommpressor:
 
 
 def _nconvert_comp(input_file, output_file, q, alg):
-    args = "nconvert -o -overwrite -out -q".split(" ")
+    args = "./nconvert -o -overwrite -out -q".split(" ")
     args.append(input_file)
     args.insert(2, output_file)
     args.insert(-2, alg)
@@ -140,7 +140,7 @@ def _nconvert_comp(input_file, output_file, q, alg):
 
 
 def _nconvert_decomp(input_file, output_file):
-    args = "nconvert -o -overwrite -out".split(" ")
+    args = "./nconvert -o -overwrite -out".split(" ")
     args.append(input_file)
     args.insert(2, output_file)
     args.insert(-1, "ppm")

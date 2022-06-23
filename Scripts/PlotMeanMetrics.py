@@ -15,38 +15,23 @@ if __name__ == "__main__":
     metrics = list(metrics.keys())
     metrics
 
-    df["CompressionMethod"].unique()
+    compression_methods = df["CompressionMethod"].unique()
 
-    JPEG_means = {}
-    JPEG2K_means = {}
-    JPEGXR_means = {}
-    DL_means = {}
-
+    metric_means = {}
+    metric_means.update({m: {} for m in metrics})
     for k in metrics:
-        JPEG_means.update({k: np.mean(df.loc[df["CompressionMethod"] == "JPEG"][k])})
-        JPEG2K_means.update(
-            {k: np.mean(df.loc[df["CompressionMethod"] == "JPEG2K"][k])}
-        )
-        JPEGXR_means.update(
-            {k: np.mean(df.loc[df["CompressionMethod"] == "JPEGXR"][k])}
-        )
-        DL_means.update(
-            {k: np.mean(df.loc[df["CompressionMethod"] == "b2018-gdn-128-1"][k])}
-        )
+        for cm in compression_methods:
+            metric_means[k].update(
+                {cm: np.mean(df.loc[df["CompressionMethod"] == cm][k])}
+            )
         fig, ax = plt.subplots()
+        fig.set_figheight(10)
+        fig.set_figwidth(20)
         ax.set_xticks(
-            np.arange(1, 5, 1),
-            labels=df["CompressionMethod"].unique(),
+            np.arange(1, 12, 1),
+            labels=compression_methods,
         )
-        ax.bar(
-            np.arange(1, 5, 1),
-            [
-                DL_means[k],
-                JPEGXR_means[k],
-                JPEG_means[k],
-                JPEG2K_means[k],
-            ],
-        )
+        ax.bar(np.arange(1, 12, 1), metric_means[k].values(), 0.35)
         ax.set_title("Metric: " + str(k))
         # plt.show()
         print(k)

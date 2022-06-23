@@ -23,15 +23,13 @@ module.read_png = read_image
 sys.modules["tensorflow_compression_local.models.tfci"] = module
 
 
-
-
 class DeepLearningCompressor:
     def __init__(self, model_name):
         self.modelName = model_name
 
     def compress(self, input_file_path, output_file_path):
         """Compress the image to a *.tfci file"""
-        
+
         raise NotImplementedError()
 
     def decompress(self, input_file_path, output_file_path):
@@ -45,6 +43,7 @@ class DeepLearningCompressor:
 
 class DeepLearningCompressorTF(DeepLearningCompressor):
     "Deep Learning Compressor Implementation for tensorflow/compression"
+
     def __init__(self, model_name):
         self.modelName = model_name
 
@@ -87,7 +86,6 @@ class DeepLearningCompressorTF(DeepLearningCompressor):
         decompress(args.input_file, args.output_file)
 
 
-
 class DeepLearningCompressorRecurrentNN(DeepLearningCompressor):
     def __init__(self, model_name, quality):
         self.modelName = model_name
@@ -105,16 +103,24 @@ class DeepLearningCompressorRecurrentNN(DeepLearningCompressor):
         if isinstance(output_file_path, Path):
             output_file_path = output_file_path.as_posix()
 
-
-        process = subprocess.Popen(["python",
-        "/home/pfeiffer/repos/Media-Data-Formats-PS/deep_learning_compression/tf-models/research/compression/image_encoder_v2/encoder.py",
-        f"--input_image={input_file_path}",
-        f"--output_codes={output_file_path}", "--model=compression_residual_gru/residual_gru.pb", f"--iteration={self.quality}"]
-                    ,stdout=subprocess.PIPE, 
-                    stderr=subprocess.STDOUT, universal_newlines=True)
+        process = subprocess.Popen(
+            [
+                "python3",
+                "./tf-models/research/compression/image_encoder_v2/encoder.py",
+                f"--input_image={input_file_path}",
+                f"--output_codes={output_file_path}",
+                "--model=compression_residual_gru/residual_gru.pb",
+                f"--iteration={self.quality}",
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+        )
 
         stdout, stderr = process.communicate()
         print(f"compressed rnn {input_file_path}")
+        print(str(stdout))
+
         pass
 
     def decompress(self, input_file_path, output_file_path):
@@ -129,18 +135,22 @@ class DeepLearningCompressorRecurrentNN(DeepLearningCompressor):
         if isinstance(output_file_path, Path):
             output_file_path = output_file_path.as_posix()
 
-        process = subprocess.Popen(["python",
-        "/home/pfeiffer/repos/Media-Data-Formats-PS/deep_learning_compression/tf-models/research/compression/image_encoder_v2/decoder.py",
-        f"--input_codes={input_file_path}",
-        f"--output_directory={output_file_path}", "--model=compression_residual_gru/residual_gru.pb"]
-                    ,stdout=subprocess.PIPE, 
-                    stderr=subprocess.STDOUT, universal_newlines=True)
+        process = subprocess.Popen(
+            [
+                "python3",
+                "./tf-models/research/compression/image_encoder_v2/decoder.py",
+                f"--input_codes={input_file_path}",
+                f"--output_directory={output_file_path}",
+                "--model=compression_residual_gru/residual_gru.pb",
+            ],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.STDOUT,
+            universal_newlines=True,
+        )
 
         stdout, stderr = process.communicate()
+        print(str(stdout))
         pass
-
-
-
 
 
 if __name__ == "__main__":
@@ -152,7 +162,7 @@ if __name__ == "__main__":
     out = "/home/pfeiffer/repos/Media-Data-Formats-PS/deep_learning_compression/tmp/big_building_compressed.tfci"
     outc = "/home/pfeiffer/repos/Media-Data-Formats-PS/deep_learning_compression/tmp/big_building_compressed.png"
 
-    c = DeepLearningCompressorRecurrentNN(model,2)
+    c = DeepLearningCompressorRecurrentNN(model, 2)
 
     c.compress(inp, out)
     c.decompress(out, outc)

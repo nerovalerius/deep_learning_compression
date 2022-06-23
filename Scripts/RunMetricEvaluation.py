@@ -87,7 +87,9 @@ if __name__ == "__main__":
         data_dict = json.load(f)
 
     data: AllCompressImage = AllCompressImage.from_dict(data_dict)
-
+    data.Images = [
+        img for i, img in enumerate(data.Images) if i not in [8]
+    ]  # exclude deer.ppm because it fucks up brisque
     all_results = MetricResults(Results=[])
 
     for it, reference_image_obj in enumerate(data.Images):
